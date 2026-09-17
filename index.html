@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Índice MUGIWARA</title>
+ <style>
+ body { font-family: Arial, sans-serif; margin: 20px; }
+ header { text-align: center; margin-bottom: 30px; }
+ .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+ .movie-item { border: 1px solid #ccc; padding: 10px; text-align: center; }
+ .movie-item img { max-width: 100%; height: auto; }
+ </style>
+</head>
+<body>
+ <header>
+ <h1>MUGIWARA</h1>
+ <p>Índice de Películas y Series</p>
+ </header>
+ <main>
+ <div class="movie-grid" id="movie-grid">
+ <!-- Aquí aparecerán las películas -->
+ </div>
+ </main>
+ <script>
+  const apiKey = 'e7394600d26612a089a1440e8aad7370';
+const url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=es-ES`;
+
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    const movieGrid = document.getElementById('movie-grid');
+    movieGrid.innerHTML = '';
+    data.results.forEach(movie => {
+      const movieItem = document.createElement('div');
+      movieItem.classList.add('movie-item');
+
+      const img = document.createElement('img');
+      img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+      img.alt = movie.title;
+
+      const title = document.createElement('h3');
+      title.textContent = movie.title;
+
+      movieItem.appendChild(img);
+      movieItem.appendChild(title);
+      movieGrid.appendChild(movieItem);
+    });
+  })
+  .catch(error => console.error('Error:', error));
+
+  
+ </script>
+</body>
+</html>
+
